@@ -139,9 +139,10 @@ def check_cube_validity(cube: "Cube", ui: "UI"):
         ui (UI): Instance of an UI implementation
     """
     logging.info(f"Checking cube {cube.name} validity")
-    ui.text = "Checking cube MD5 hash..."
+    ui.text = "Checking cube validity..."
     if not cube.is_valid():
-        pretty_error("MD5 hash doesn't match")
+        logging.error(f"Cube {cube.name} validation step failed.")
+        pretty_error("Cube is not valid")
     logging.info(f"Cube {cube.name} is valid")
     ui.print(f"> {cube.name} MD5 hash check complete")
 

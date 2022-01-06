@@ -82,9 +82,14 @@ class Cube(object):
         Returns:
             bool: Wether the cube and related files match the expeced hashes
         """
+        if not self.meta["is_valid"]:
+            logging.error("Cube invalidated by the author")
+            return False
+
         has_additional = "tarball_url" in self.meta and self.meta["tarball_url"]
         if has_additional:
             valid_additional = self.additional_hash == self.meta["tarball_hash"]
+            logging.info(f"Cube tarball hash matches expected hash? {valid_additional}")
         else:
             valid_additional = True
         return valid_additional
