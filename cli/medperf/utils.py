@@ -142,7 +142,7 @@ def check_cube_validity(cube: "Cube", ui: "UI"):
     ui.text = "Checking cube validity..."
     if not cube.is_valid():
         logging.error(f"Cube {cube.name} validation step failed.")
-        pretty_error("Cube is not valid")
+        pretty_error("Cube is not valid", ui)
     logging.info(f"Cube {cube.name} is valid")
     ui.print(f"> {cube.name} MD5 hash check complete")
 
