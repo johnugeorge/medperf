@@ -178,6 +178,19 @@ def test_cube_is_valid_with_correct_hash(mocker, comms, tar_body):
     assert cube.is_valid()
 
 
+def test_cube_is_invalid_if_invalidated_by_author(mocker, comms, basic_body):
+    # Arrange
+    uid = 1
+    cube = Cube.get(uid, comms)
+    cube.meta["is_valid"] = False
+
+    # Act
+    valid = cube.is_valid()
+
+    # Assert
+    assert not valid
+
+
 def test_cube_is_invalid_with_incorrect_hash(mocker, comms, tar_body):
     # Arrange
     mocker.patch(PATCH_CUBE.format("get_file_sha1"), return_value="incorrect_hash")

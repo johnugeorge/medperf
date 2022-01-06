@@ -53,6 +53,7 @@ def cube_metadata_generator(with_params=False, with_tarball=False):
             "tarball_url": tarball,
             "tarball_hash": hash,
             "metadata": {},
+            "is_valid": True,
             "created_at": "timestamp",
             "modified_at": "timestamp",
             "owner": 1,
