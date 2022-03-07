@@ -17,7 +17,7 @@ class AssociateDataset:
         dset = Dataset(data_uid, ui)
         benchmark = Benchmark.get(benchmark_uid, comms)
 
-        if dset.preparation_cube_uid != benchmark.data_preparation:
+        if str(dset.preparation_cube_uid) != str(benchmark.data_preparation):
             pretty_error("The specified dataset wasn't prepared for this benchmark", ui)
 
         # Run compatibility test between benchmark and dataset
