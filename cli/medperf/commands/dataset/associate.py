@@ -1,10 +1,11 @@
 from medperf.ui import UI
 from medperf.comms import Comms
 from medperf.entities import Dataset, Benchmark
-from medperf.utils import pretty_error
+from medperf.utils import pretty_error, dict_pretty_print
+from medperf.commands.benchmark.compatibility_test import CompatibilityTestExecution
 
 
-class DatasetBenchmarkAssociation:
+class AssociateDataset:
     @staticmethod
     def run(data_uid: str, benchmark_uid: int, comms: Comms, ui: UI):
         """Associates a registered dataset with a benchmark
@@ -18,6 +19,15 @@ class DatasetBenchmarkAssociation:
 
         if dset.preparation_cube_uid != benchmark.data_preparation:
             pretty_error("The specified dataset wasn't prepared for this benchmark", ui)
+
+        # Run compatibility test between benchmark and dataset
+        _, _, _, result = CompatibilityTestExecution.run(
+            benchmark_uid, comms, ui, data_uid=data_uid,
+        )
+        ui.print(
+            "Results obtained from the compatibility test. These are shared in the association process, and will not be part of the benchmark."
+        )
+        dict_pretty_print(result.todict())
         approval = dset.request_association_approval(benchmark, ui)
 
         if approval:

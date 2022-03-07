@@ -4,7 +4,7 @@ from medperf.ui import UI
 from medperf.comms import Comms
 from medperf.tests.utils import rand_l
 from medperf.entities import Dataset, Benchmark
-from medperf.commands.dataset import DatasetBenchmarkAssociation
+from medperf.commands.dataset import AssociateDataset
 
 patch_associate = "medperf.commands.dataset.associate.{}"
 req_func = "request_association_approval"
@@ -40,7 +40,7 @@ def test_fails_if_dataset_incompatible_with_benchmark(
 
     # Act
     with pytest.raises(SystemExit):
-        DatasetBenchmarkAssociation.run(1, 1, comms, ui)
+        AssociateDataset.run(1, 1, comms, ui)
 
     # Assert
     spy.assert_called_once()
@@ -54,7 +54,7 @@ def test_requests_approval_from_user(mocker, comms, ui, dataset, benchmark):
     dataset.uid = 1
 
     # Act
-    DatasetBenchmarkAssociation.run(1, 1, comms, ui)
+    AssociateDataset.run(1, 1, comms, ui)
 
     # Assert
     spy.assert_called_once()
@@ -74,7 +74,7 @@ def test_associates_if_approved(
     dataset.uid = data_uid
 
     # Act
-    DatasetBenchmarkAssociation.run(data_uid, benchmark_uid, comms, ui)
+    AssociateDataset.run(data_uid, benchmark_uid, comms, ui)
 
     # Assert
     spy.assert_called_once_with(data_uid, benchmark_uid)
@@ -92,7 +92,7 @@ def test_stops_if_not_approved(mocker, comms, ui, dataset, benchmark):
 
     # Act
     with pytest.raises(SystemExit):
-        DatasetBenchmarkAssociation.run(1, 1, comms, ui)
+        AssociateDataset.run(1, 1, comms, ui)
 
     # Assert
     spy.assert_called_once()
